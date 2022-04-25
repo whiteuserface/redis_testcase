@@ -16,7 +16,7 @@ public class RedisController {
 
     @RequestMapping(value="register", method=RequestMethod.POST, produces = "application/json; charset=utf8")
     public Object register(@RequestBody RedisInfo redisInfo){
-        redisService.addKey(redisInfo.getKey(), redisInfo.getValue());
+        redisService.addKey(redisInfo);
         return redisInfo;
     }
 
@@ -25,10 +25,5 @@ public class RedisController {
         String value = redisService.getValue(redisInfo.getKey());
         redisInfo.setValue(value);
         return redisInfo;
-    }
-
-    @RequestMapping(value = "getvalue",method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public String getValue (@RequestBody String key){
-        return redisService.getValue(key);
     }
 }

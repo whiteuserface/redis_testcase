@@ -1,6 +1,7 @@
 package com.example.demo2.Service;
 
 
+import com.example.demo2.Vo.RedisInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -12,10 +13,11 @@ public class RedisService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-    public void addKey(String key, String value){
+    public void addKey(RedisInfo redisInfo){
         try{
             //키 세팅
-            redisTemplate.opsForValue().set(key, value);
+            redisTemplate.opsForValue().set(redisInfo.getKey(), redisInfo.getValue());
+
         } catch(Exception e){
             //에러발생
             log.error("### Redis Set Key Error !!! ::: {}", e.getMessage());
@@ -27,8 +29,8 @@ public class RedisService {
             if(redisTemplate.hasKey(key)){
                 value = redisTemplate.opsForValue().get(key);
             }
-        } catch (Exception e){
-            log.error("### Redis Set Key Error !!! ::: {}", e.getMessage());
+        }  catch (Exception e){
+            log.error("### Redis Get Value Error !!! ::: {}", e.getMessage());
         }
         return value;
     }
